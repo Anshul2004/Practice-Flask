@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+/* Color Scheme */
+ul {
+  border-color: black; }
+
+li {
+  font-family: "Montserrat", sans-serif;
+  font-size: 120%;
+  color: #07021d; }
+
+a {
+  color: blueviolet; }
+
+/*# sourceMappingURL=main.css.map */

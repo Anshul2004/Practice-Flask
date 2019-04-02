@@ -1,0 +1,20 @@
+@import 'fonts';
+
+$font1: "Montserrat", sans-serif;
+
+/* Color Scheme */
+$fake_black: #07021d;
+
+ul {
+    border-color: black;
+}
+
+li {
+    font-family: "Montserrat", sans-serif;
+    font-size: 120%;
+    color: $fake_black;
+}
+
+a {
+    color: blueviolet;
+}

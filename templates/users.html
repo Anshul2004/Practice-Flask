@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Users</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    </head>
+    <body>
+        {% if list != [] %}
+        <ul id="user-list">
+            {% for item in users_list %}
+                <a href="users/{{ item }}">Get more INFO!!!</a>
+                <li>Username: {{ item }}</li>
+                <li>Password: {{ users_list[item] }}</li>
+                <br/>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </body>
+</html>
