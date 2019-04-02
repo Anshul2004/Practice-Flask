@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Sign Up here!</title>
+        <script src="../scripts/index.js"></script>
+    </head>
+    <body>
+        <a href="/signup">Sign UP!</a>
+        <a href="/login">Log in</a>
+
+        <h1>Sign up</h1>
+
+        <form action='' method='post'>
+            <input type='text' placeholder='Username' name='username' value='{{request.form.username}}'>
+            <input type='password' placeholder='Password' name='password' value='{{request.form.password}}'>
+            <input type='submit' value='Submit'>
+        </form>
+
+        {% if error_code == "1" %}
+            <p id="errorExisting">That username already exists</p>
+        {% endif %}
+    </body>
+</html>
