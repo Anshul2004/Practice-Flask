@@ -33,13 +33,21 @@ def hello_world():
 ########
 @app.route("/login", methods=['GET', 'POST'])
 def login_page():
-    if request.method == "GET":
-        return render_template("login.html")
+    if request.method == 'GET':
+        if not logged_in():
+            print('Session is >' + str(session))
+            return render_template("login.html")
 
     elif request.method == 'POST':
-        pass
-        # do some verfication
-        #session['user'] = {'username': username}
+        print('collected data')
+        print(request.form) 
+        # this runs when someone hits "submit"
+        # lol on the form in HTML, we forgot the button to send
+        data = (request.form['username'], request.form['password'])
+        if data[0] in collect_json():
+            return redirect("home")
+        else:
+            return render_template("login.html", error_code="1")
 
 
 #########
@@ -66,6 +74,13 @@ def signup_page():
             users_data[data[0]] = data[1]
             insert_json(users_data)            
             return "It worked!"
+
+#########
+# HOME
+#########  
+@app.route("/home")
+def home_page():
+    return render_template("home.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

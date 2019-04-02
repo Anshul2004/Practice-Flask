@@ -7,7 +7,14 @@
         <a href="/signup">Sign UP!</a>
         <a href="/login">Log in</a>
 
-        <p id="ridhi">Welcome</p> 
-        <h1>How are you doing today? {{username}}</h1>
+        <form action='' method='post'>
+            <input type='text' placeholder='Username' name='username' value='{{request.form.username}}'>
+            <input type='password' placeholder='Password' name='password' value='{{request.form.password}}'>
+            <input type='submit' value='Submit'>
+        </form>
+
+        {% if error_code == "1" %}
+            <h1>That username or password was incorrect</h1>
+        {% endif %}
     </body>
 </html>
