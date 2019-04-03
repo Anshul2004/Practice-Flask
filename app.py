@@ -1,9 +1,40 @@
 from flask import Flask, request, session, render_template, redirect, flash, url_for
 import json
 from functools import wraps
+import pyrebase
 
 app = Flask(__name__.split('.')[0])
-app.secret_key = 'Flask'
+app.secret_key = 'sf651456se561sef156se156sef1653sfe1653sf1sf1f1s32sffsf35f1313s3ss1fs1f51651416s551'
+
+
+config = {
+    "apiKey": "AIzaSyAyPZb_cuRLwt5-lhJECzNTRz8QAGhI-PM",
+    "authDomain": "flask-test-31ade.firebaseapp.com",
+    "databaseURL": "https://flask-test-31ade.firebaseio.com",
+    "projectId": "flask-test-31ade",
+    "storageBucket": "flask-test-31ade.appspot.com",
+    "messagingSenderId": "522452899767"
+}
+
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
+db.child("names").push({"name": "Anshul the god"})
+
+# Firebase Functions
+
+def input_data(data, database):
+    db.child(database).push(data)
+
+def remove_data(data, database):
+    db.child(database).remove(data)
+
+def view_data(database):
+    # kk since this is all based off python
+    #db.child(database).
+
+# this is firebase?
+#^
+
 
 def logged_in():
     '''returns bool
@@ -41,7 +72,7 @@ def login_required(f):
 # HOME
 #######
 @app.route('/')
-def hello_world():
+def home_page():
     return render_template('index.html')
 
 
@@ -55,20 +86,39 @@ def login_page():
             print('Session is >' + str(session))
             return render_template("login.html")
 
+        # Logged In already
+        return redirect(url_for('users_page', username=session['user']['username']))
+
     # Form input
     elif request.method == 'POST':
         data = (request.form['username'], request.form['password'])
         users_database = collect_json()
         
         # Logged in!
-        if data[0] in users_database and data[1] == users_database[data[0]]:
+        if data[0] in users_database and data[1] == users_database[data[0]]["password"]:
             session['user'] = {'username': data[0]}
-            return redirect(url_for('test'))
-            
-        
+            return redirect(url_for('users_page', username=session['user']['username']))
         # Invalid login information
         else:
             return render_template("login.html", error_code="1")
+
+######
+
+"""
+"""
+
+
+#########
+# LOGOUT
+#########
+@app.route('/logout', methods=['GET', 'POST'])
+def logout_page():
+    if request.method == 'GET':
+        return render_template('logout.html')
+        
+    elif request.method == 'POST':
+        del session['user']
+        return redirect(url_for("home_page"))
 
 #########
 # SIGNUP
@@ -81,15 +131,15 @@ def signup_page():
 
     # Form input
     elif request.method == 'POST':
-        data = (request.form['username'], request.form['password'])
-        
-        if data[0] in collect_json():
+        data = (request.form['username'], request.form['password'], request.form['email'])
+        users_database = collect_json()
+
+        if data[0] in users_database or data[2] in [users_database[i]['email'] for i in users_database]:
             return render_template("signup.html", error_code="1")
-        
         else:
             # make a new user!
             users_data = collect_json()
-            users_data[data[0]] = data[1]
+            users_data[data[0]] = {"password": data[1], "email": data[2]}
             insert_json(users_data)            
             return "It worked!"
 

@@ -10,7 +10,8 @@
             {% for item in users_list %}
                 <a href="users/{{ item }}">Get more INFO!!!</a>
                 <li>Username: {{ item }}</li>
-                <li>Password: {{ users_list[item] }}</li>
+                <li>Password: {{ users_list[item]['password'] }}</li>
+                <li>Email: {{ users_list[item]['email'] }}</li>
                 <br/>
             {% endfor %}
             </ul>

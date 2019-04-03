@@ -11,13 +11,14 @@
         <h1>Sign up</h1>
 
         <form action='' method='post'>
+            <input type='text' placeholder='Email' name='email' value='{{request.form.email}}'>
             <input type='text' placeholder='Username' name='username' value='{{request.form.username}}'>
             <input type='password' placeholder='Password' name='password' value='{{request.form.password}}'>
             <input type='submit' value='Submit'>
         </form>
 
         {% if error_code == "1" %}
-            <p id="errorExisting">That username already exists</p>
+            <p id="errorExisting">That username already exists or the email already has been used to register an account</p>
         {% endif %}
     </body>
 </html>
